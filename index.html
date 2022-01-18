@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI'en Torben</title>
+  
+    <script type="text/javascript" >
+        window.addEventListener("load", function() { 
+    // create websocket instance
+    var mySocket = new WebSocket("ws://87.63.57.202:48029");
+    
+    // add event listener reacting when message is received
+    mySocket.onmessage = function (event) {
+        var output = document.getElementById("output");
+        // put text into our output div
+        output.textContent = event.data;
+    };
+    var form = document.getElementsByClassName("foo");
+    var input = document.getElementById("input");
+    form[0].addEventListener("submit", function (e) {
+        // on forms submission send input to our server
+        input_text = input.value;
+        mySocket.send(input_text);
+        e.preventDefault()
+    })
+});
+    </script>
+</head>
+<style>
+    body {
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(90deg, rgba(255,191,0,1) 0%, rgba(255,0,0,1) 100%);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.main {
+    color: white;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+    font-size: 60px;
+}
+
+.foo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.question {
+    margin: 20px 0;
+    width: 250px;
+}
+
+.submit {
+    border-radius: 5px;
+    background: blue;
+    padding: 15px 5px;
+    border: 0;
+
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    width: 200px;
+}
+</style>
+<body>
+    <div class="main">Snak med Torben</div>
+    <form class="foo">
+        <input id="input" class="question" value=""></input>
+        <input type="submit" value="Spørg Torben" class="submit"></input>
+    </form>
+    <div id="output"></div>
+</body>
+</html>
